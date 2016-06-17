@@ -1,0 +1,7 @@
+zones:
+  12345678: # site1 banner 728x90
+    - images/test.png
+    - images/test2.png
+  23456789: # site1 banner 250x250
+    - images/test.png
+    - images/test3.png
