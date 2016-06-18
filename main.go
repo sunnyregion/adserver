@@ -8,7 +8,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/gin-gonic/gin"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/engine/fasthttp"
 	"gopkg.in/yaml.v2"
 )
 
@@ -27,6 +28,7 @@ func (c *Config) parse(data []byte) error {
 }
 
 // TODO: Pre generate Banners
+// TODO: Use goroutine
 
 func sample(a []int) int {
 	r := rand.Intn(len(a))
@@ -56,15 +58,15 @@ func main() {
 
 	fmt.Printf("%#v\n", config)
 
-	r := gin.Default()
-	// gin.SetMode(gin.ReleaseMode)
-	r.GET("/zones/:id", func(c *gin.Context) {
+	e := echo.New()
+	e.GET("/zones/:id", func(c echo.Context) error {
 		zone := c.Param("id")
 		if config.Zones[zone] != nil {
-			c.String(http.StatusOK, getBanner(zone, &config))
-		} else {
-			c.String(http.StatusNotFound, "Not Found")
+			return c.String(http.StatusOK, getBanner(zone, &config))
 		}
+		return c.String(http.StatusNotFound, "Not Found")
 	})
-	r.Run() // listen and server on 0.0.0.0:8080
+	e.Static("/", "public/index.html")
+	e.Run(fasthttp.New(":1323"))
+
 }
