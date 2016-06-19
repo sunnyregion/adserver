@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"math/rand"
 	"net/http"
@@ -9,6 +8,7 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/fasthttp"
+	"github.com/labstack/echo/middleware"
 	"gopkg.in/yaml.v2"
 )
 
@@ -93,9 +93,10 @@ banners:
 		log.Fatal(err)
 	}
 
-	fmt.Printf("%#v\n", config)
+	// fmt.Printf("%#v\n", config)
 
 	e := echo.New()
+	e.Use(middleware.CORS())
 	e.GET("/zones/:site/:id", func(c echo.Context) error {
 		zone := c.Param("id")
 		site := c.Param("site")
