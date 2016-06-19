@@ -41,7 +41,7 @@ func sample(a []Banner) Banner {
 }
 
 func generateBanner(image string, url string) string {
-	return "<a href='" + url + "'><img src='" + image + "'/></a>"
+	return "document.write('<a href=\"" + url + "\"><img src=\"" + image + "\"/></a>');"
 }
 
 func getBanner(site string, zoneID string, c *Config) string {
@@ -101,11 +101,12 @@ banners:
 		zone := c.Param("id")
 		site := c.Param("site")
 		if config.Sites[site].Zones[zone] != "" {
+			c.Response().Header().Set("Cache-Control", "max-age=59")
 			return c.String(http.StatusOK, getBanner(site, zone, &config))
 		}
 		return c.String(http.StatusNotFound, "Not Found")
 	})
-	e.Static("/", "ads/index.html")
+	e.Static("/", "ads")
 	e.Run(fasthttp.New(":1323"))
 
 }
