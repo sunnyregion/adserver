@@ -1,18 +1,21 @@
-zones:
-  12345678: # site1 banner 728x90
-    - 1
-    - 2
-  23456789: # site1 banner 250x300
-    - 1
-    - 3
-banners:
-  1: # skyscraper 728x90
-    image: images/test.png
-    url: www.pronostic-facile.fr
-  2: # skypescraper 728x90
-    image: images/test2.png
-    url: www.turfistar.com
-  3: # square 250x300
-    image: images/test3.png
-    url: www.gazette-turf.fr
+defaults:
+  base_uri: http://static.turfmedia.com/
+sites:
+  ph:
+    settings:
+      affiliate-id: 2a848818
 
+    zones:
+      top: banner728x90
+      middle: banner728x90
+banners:
+  banner728x90: #skyscraper
+    -
+      image: turfistar/3481d796.png
+      url: "http://turfistar.com/#a_aid=2a848818&a_bid=3481d796"
+    -
+      image: pronostic-facile/0eca889d.png
+      url: "http://www.pronostic-facile.fr?a_aid=2a848818&a_bid=0eca889d"
+    -
+      image: gazette-turf/8d3376b4.png
+      url: "http://gazette-turf.fr/#a_aid=2a848818&a_bid=8d3376b4"
